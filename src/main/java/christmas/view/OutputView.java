@@ -1,2 +1,5 @@
-package christmas.view;public class OutputView {
+package christmas.view;
+
+public class OutputView {
+
 }
