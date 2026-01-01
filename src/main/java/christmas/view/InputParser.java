@@ -6,10 +6,14 @@ import christmas.exception.ErrorMessage;
 public class InputParser {
 
     public static Integer parseVisitDate(String input) {
+        validateVisitDate(input);
+        return Integer.parseInt(input);
+    }
+
+    private static void validateVisitDate(String input) {
         validateEmpty(input);
         validateNumeric(input);
         validateRange(input);
-        return Integer.parseInt(input);
     }
 
     private static void validateEmpty(String input) {
