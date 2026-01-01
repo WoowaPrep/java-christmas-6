@@ -1,9 +1,11 @@
 package christmas;
 
+import christmas.domain.Menus;
 import christmas.domain.VisitDate;
 import christmas.view.InputParser;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+import java.util.Map;
 
 public class ChristmasPromotion {
 
@@ -21,7 +23,7 @@ public class ChristmasPromotion {
 
     public void open() {
         VisitDate visitDate = readVisitDate();
-
+        Menus menus = readMenus();
     }
 
     private VisitDate readVisitDate() {
@@ -30,4 +32,9 @@ public class ChristmasPromotion {
         return new VisitDate(visitDate);
     }
 
+    private Menus readMenus() {
+        String menusInput = inputView.readMenus();
+        Map<String, Integer> countByMenu = InputParser.parseMenus(menusInput);
+        return new Menus(countByMenu);
+    }
 }
