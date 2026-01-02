@@ -72,12 +72,18 @@ public class ChristmasPromotion {
 
     private void printBenefits(Menus menus, VisitDate day) {
         LocalDate visitDate = LocalDate.of(2023, 12, day.getDay());
-
         outputView.printBenefitsHistoryTitle();
-        outputView.printDdayDiscount(visitDate);
-        outputView.printWeekdayDiscount(menus, visitDate);
-        outputView.printWeekendDiscount(menus, visitDate);
-        outputView.printSpecialDiscount(visitDate);
-        outputView.printGiftDiscount(menus);
+
+        boolean hasDiscount = false;
+        if (outputView.printDdayDiscount(visitDate)) hasDiscount = true;
+        if (outputView.printWeekdayDiscount(menus, visitDate)) hasDiscount = true;
+        if (outputView.printWeekendDiscount(menus, visitDate)) hasDiscount = true;
+        if (outputView.printSpecialDiscount(visitDate)) hasDiscount = true;
+        if (outputView.printGiftDiscount(menus)) hasDiscount = true;
+
+        if (!hasDiscount) {
+            outputView.printNone();
+        }
+        outputView.printNewLine();
     }
 }

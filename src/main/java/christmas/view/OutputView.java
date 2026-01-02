@@ -10,7 +10,7 @@ public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
 
-    private static final String NONE = "없음" + NEW_LINE;
+    private static final String NONE = "없음";
 
     private static final int CHRISTMAS_D_DAY = 25;
 
@@ -63,62 +63,80 @@ public class OutputView {
             System.out.println(ONE_CHAMPAGNE);
             return;
         }
-        System.out.println(NONE);
+        printNone();
+        printNewLine();
     }
 
     public void printBenefitsHistoryTitle() {
         System.out.println(BENEFITS_HISTORY_TITLE);
     }
 
-    public void printDdayDiscount(LocalDate date) {
+    public boolean printDdayDiscount(LocalDate date) {
         int dayOfMonth = date.getDayOfMonth();
         if (dayOfMonth > CHRISTMAS_D_DAY) {
-            return;
+            return false;
         }
 
         int totalDiscount = Discount.calculateDdayDiscount(dayOfMonth);
-        if (totalDiscount > 0) {
-            System.out.printf(CHRISTMAS_D_DAY_DISCOUNT, -totalDiscount);
+        if (totalDiscount == 0) {
+            return false;
         }
+        System.out.printf(CHRISTMAS_D_DAY_DISCOUNT, -totalDiscount);
+        return true;
     }
 
-    public void printWeekdayDiscount(Menus menus, LocalDate date) {
+    public boolean printWeekdayDiscount(Menus menus, LocalDate date) {
         int dayModWeek = date.getDayOfMonth() % WEEK_PERIOD;
         if (dayModWeek == FRIDAY || dayModWeek == SATURDAY) {
-            return;
+            return false;
         }
 
         int totalDiscount = Discount.calculateWeekdayDiscount(menus);
-        if (totalDiscount > 0) {
-            System.out.printf(WEEKDAY_DISCOUNT, -totalDiscount);
+        if (totalDiscount == 0) {
+            return false;
         }
+        System.out.printf(WEEKDAY_DISCOUNT, -totalDiscount);
+        return true;
     }
 
-    public void printWeekendDiscount(Menus menus, LocalDate date) {
+    public boolean printWeekendDiscount(Menus menus, LocalDate date) {
         int dayModWeek = date.getDayOfMonth() % WEEK_PERIOD;
         if (dayModWeek != FRIDAY && dayModWeek != SATURDAY) {
-            return;
+            return false;
         }
 
         int totalDiscount = Discount.calculateWeekendDiscount(menus);
-        if (totalDiscount > 0) {
-            System.out.printf(WEEKEND_DISCOUNT, -totalDiscount);
+        if (totalDiscount == 0) {
+            return false;
         }
+        System.out.printf(WEEKEND_DISCOUNT, -totalDiscount);
+        return true;
     }
 
-    public void printSpecialDiscount(LocalDate date) {
+    public boolean printSpecialDiscount(LocalDate date) {
         int dayOfMonth = date.getDayOfMonth();
         if (dayOfMonth != CHRISTMAS_D_DAY && dayOfMonth % 7 != SUNDAY) {
-            return;
+            return false;
         }
 
         System.out.printf(SPECIAL_DISCOUNT, -Discount.calculateSpecialDiscount());
+        return true;
     }
 
-    public void printGiftDiscount(Menus menus) {
+    public boolean printGiftDiscount(Menus menus) {
         int totalDiscount = Discount.calculateGiftDiscount(menus);
-        if (totalDiscount > 0) {
-            System.out.printf(GIFT_EVENT_DISCOUNT, -totalDiscount);
+        if (totalDiscount == 0) {
+            return false;
         }
+        System.out.printf(GIFT_EVENT_DISCOUNT, -totalDiscount);
+        return true;
+    }
+
+    public void printNone() {
+        System.out.println(NONE);
+    }
+
+    public void printNewLine() {
+        System.out.println();
     }
 }
