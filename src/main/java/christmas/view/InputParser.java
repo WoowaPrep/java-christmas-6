@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.domain.DishType;
 import christmas.domain.MenuBoard;
 import christmas.exception.ChristmasException;
 import christmas.exception.ErrorMessage;
@@ -28,6 +29,8 @@ public class InputParser {
 
         String[] countMenuPairs = input.split(COMMA_DELIMITER);
         int totalCount = 0;
+        boolean isAllBeverage = true;
+
         for (String countMenuPair : countMenuPairs) {
             String[] countMenu = countMenuPair.split(HYPHEN_DELIMITER);
             validateMenuPairFormat(countMenu);
@@ -40,9 +43,23 @@ public class InputParser {
             countByMenu.put(validateMenu(menu), validateCount(count));
             totalCount += Integer.parseInt(count);
             validateTotalOrder(totalCount);
+            if (isAllBeverage) {
+                isAllBeverage = validateBeverage(menu);
+            }
         }
 
+        if (isAllBeverage) {
+            throw ChristmasException.from(ErrorMessage.ALL_BEVERAGE_MENU);
+        }
         return countByMenu;
+    }
+
+    private static boolean validateBeverage(String input) {
+        MenuBoard menu = MenuBoard.of(input);
+        if (menu.getDishType().equals(DishType.BEVERAGE)) {
+            return true;
+        }
+        return false;
     }
 
     private static void validateVisitDate(String input) {

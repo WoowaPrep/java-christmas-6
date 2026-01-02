@@ -6,6 +6,8 @@ import java.util.Map.Entry;
 
 public class Discount {
 
+    private static final int EVENT_THRESH_HOLD = 10_000;
+
     private static final int BASIC_DISCOUNT = 1_000;
     private static final int SPECIAL_DISCOUNT = 1_000;
     private static final int DAILY_INCREMENT = 100;
@@ -22,13 +24,17 @@ public class Discount {
     private static final int SUNDAY = 3;
 
     public static int calculateAllDiscount(Menus menus, LocalDate date) {
-        return  calculateDdayDiscount(date) +
+        if (validateTotalOrder(menus)) {
+            return 0;
+        }
+
+        return  calculateDdayDiscount(menus, date) +
                 calculateWeekdayDiscount(menus, date) +
                 calculateWeekendDiscount(menus, date) +
-                calculateSpecialDiscount(date);
+                calculateSpecialDiscount(menus, date);
     }
 
-    public static int calculateDdayDiscount(LocalDate date) {
+    public static int calculateDdayDiscount(Menus menus, LocalDate date) {
         int dayOfMonth = date.getDayOfMonth();
         if (dayOfMonth > CHRISTMAS_D_DAY) {
             return 0;
@@ -77,7 +83,7 @@ public class Discount {
         return totalDiscount;
     }
 
-    public static int calculateSpecialDiscount(LocalDate date) {
+    public static int calculateSpecialDiscount(Menus menus, LocalDate date) {
         int dayOfMonth = date.getDayOfMonth();
         if (dayOfMonth != CHRISTMAS_D_DAY && dayOfMonth % WEEK_PERIOD != SUNDAY) {
             return 0;
@@ -86,9 +92,21 @@ public class Discount {
     }
 
     public static int calculateGiftAmount(Menus menus) {
+        if (validateTotalOrder(menus)) {
+            return 0;
+        }
+
         if (menus.hasGift()) {
             return CHAMPAGNE_GIFT_PRICE;
         }
         return 0;
+    }
+
+    public static boolean validateTotalOrder(Menus menus) {
+        int totalOrder = menus.calculateTotalOrderAmount();
+        if (totalOrder < EVENT_THRESH_HOLD) {
+            return true;
+        }
+        return false;
     }
 }

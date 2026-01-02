@@ -9,32 +9,30 @@ import java.util.Map.Entry;
 
 public class OutputView {
 
-    private static final String NEW_LINE = System.lineSeparator();
-
     private static final String NONE = "없음";
 
-    private static final String CHRISTMAS_D_DAY_DISCOUNT = "크리스마스 디데이 할인: %,d원" + NEW_LINE;
-    private static final String WEEKDAY_DISCOUNT = "평일 할인: %,d원" + NEW_LINE;
-    private static final String WEEKEND_DISCOUNT = "주말 할인: %,d원" + NEW_LINE;
-    private static final String SPECIAL_DISCOUNT = "특별 할인: %,d원" + NEW_LINE;
-    private static final String GIFT_EVENT_DISCOUNT = "증정 이벤트: %,d원" + NEW_LINE;
+    private static final String CHRISTMAS_D_DAY_DISCOUNT = "크리스마스 디데이 할인: %,d원%n";
+    private static final String WEEKDAY_DISCOUNT = "평일 할인: %,d원%n";
+    private static final String WEEKEND_DISCOUNT = "주말 할인: %,d원%n";
+    private static final String SPECIAL_DISCOUNT = "특별 할인: %,d원%n";
+    private static final String GIFT_EVENT_DISCOUNT = "증정 이벤트: %,d원%n";
 
     private static final String EVENT_BENEFITS_PREVIEW =
-            "12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!" + NEW_LINE;
-
+            "12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!%n";
     private static final String ORDER_MENU_TITLE = "<주문 메뉴>";
     private static final String TOTAL_ORDER_AMOUNT_TITLE = "<할인 전 총주문 금액>";
     private static final String GIFT_EVENT_TITLE = "<증정 메뉴>";
     private static final String BENEFITS_HISTORY_TITLE = "<혜택 내역>";
+
     private static final String TOTAL_BENEFIT_TITLE = "<총혜택 금액>";
     private static final String PAYMENT_AMOUNT_TITLE = "<할인 후 예상 결제 금액>";
     private static final String EVENT_BADGE_TITLE = "<12월 이벤트 배지>";
 
-    private static final String MENU_COUNT_FORMAT = "%s %d개" + NEW_LINE;
-    private static final String TOTAL_ORDER_AMOUNT_FORMAT = "%,d원" + NEW_LINE;
-    private static final String ONE_CHAMPAGNE = "샴페인 1개" + NEW_LINE;
-    private static final String TOTAL_BENEFIT_AMOUNT = "%,d원" + NEW_LINE;
-    private static final String PAYMENT_AMOUNT = "%,d원" + NEW_LINE;
+    private static final String MENU_COUNT_FORMAT = "%s %d개%n";
+    private static final String TOTAL_ORDER_AMOUNT_FORMAT = "%,d원%n";
+    private static final String ONE_CHAMPAGNE = "샴페인 1개%n";
+    private static final String TOTAL_BENEFIT_AMOUNT = "%,d원%n";
+    private static final String PAYMENT_AMOUNT = "%,d원%n";
 
     public void printEventPreview(int day) {
         System.out.printf(EVENT_BENEFITS_PREVIEW, day);
@@ -76,8 +74,8 @@ public class OutputView {
         System.out.println(BENEFITS_HISTORY_TITLE);
     }
 
-    public boolean printDdayDiscount(LocalDate date) {
-        int totalDiscount = Discount.calculateDdayDiscount(date);
+    public boolean printDdayDiscount(Menus menus, LocalDate date) {
+        int totalDiscount = Discount.calculateDdayDiscount(menus, date);
         if (totalDiscount == 0) {
             return false;
         }
@@ -106,8 +104,8 @@ public class OutputView {
         return true;
     }
 
-    public boolean printSpecialDiscount(LocalDate date) {
-        int totalDiscount = Discount.calculateSpecialDiscount(date);
+    public boolean printSpecialDiscount(Menus menus, LocalDate date) {
+        int totalDiscount = Discount.calculateSpecialDiscount(menus, date);
         if (totalDiscount == 0) {
             return false;
         }

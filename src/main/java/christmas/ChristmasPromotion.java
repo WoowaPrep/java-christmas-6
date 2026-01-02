@@ -1,6 +1,5 @@
 package christmas;
 
-import christmas.domain.Badge;
 import christmas.domain.Discount;
 import christmas.domain.Menus;
 import christmas.domain.VisitDate;
@@ -82,7 +81,7 @@ public class ChristmasPromotion {
         LocalDate date = LocalDate.of(2023, 12, day.getDay());
         int totalBenefitAmount =
                 Discount.calculateAllDiscount(menus, date) +
-                        Discount.calculateGiftAmount(menus);
+                Discount.calculateGiftAmount(menus);
 
         outputView.printEventBadge(totalBenefitAmount);
     }
@@ -100,11 +99,11 @@ public class ChristmasPromotion {
     }
 
     private void printGiftEvent(Menus menus) {
-        if (menus.hasGift()) {
-            outputView.printGiftEvent(true);
+        if (Discount.validateTotalOrder(menus) || !menus.hasGift()) {
+            outputView.printGiftEvent(false);
             return;
         }
-        outputView.printGiftEvent(false);
+        outputView.printGiftEvent(true);
     }
 
     private void printBenefits(Menus menus, VisitDate day) {
@@ -112,10 +111,10 @@ public class ChristmasPromotion {
         outputView.printBenefitsHistoryTitle();
 
         boolean hasDiscount = false;
-        if (outputView.printDdayDiscount(visitDate)) hasDiscount = true;
+        if (outputView.printDdayDiscount(menus, visitDate)) hasDiscount = true;
         if (outputView.printWeekdayDiscount(menus, visitDate)) hasDiscount = true;
         if (outputView.printWeekendDiscount(menus, visitDate)) hasDiscount = true;
-        if (outputView.printSpecialDiscount(visitDate)) hasDiscount = true;
+        if (outputView.printSpecialDiscount(menus, visitDate)) hasDiscount = true;
         if (outputView.printGiftDiscount(menus)) hasDiscount = true;
 
         if (!hasDiscount) {

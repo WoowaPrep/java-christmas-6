@@ -11,6 +11,8 @@ public enum ErrorMessage {
     INVALID_MENU_COUNT("유효하지 않은 주문입니다. 다시 입력해 주세요."),
     DUPLICATED_MENU("유효하지 않은 주문입니다. 다시 입력해 주세요."),
     NOT_EXIST_MENU("유효하지 않은 주문입니다. 다시 입력해 주세요."),
+
+    ALL_BEVERAGE_MENU("음료만 주문 시, 주문할 수 없습니다. 다시 입력해 주세요."),
     EXCEED_DISH_COUNT("총 음식 개수가 20개 넘는 주문은 받을 수 없습니다. 다시 입력해 주세요."),
     ;
 

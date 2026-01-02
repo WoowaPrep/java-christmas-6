@@ -49,16 +49,4 @@ public enum MenuBoard {
     public DishType getDishType() {
         return dishType;
     }
-
-    public boolean isDessert() {
-        return dishType == DishType.DESSERT;
-    }
-
-    public boolean isMain() {
-        return dishType == DishType.MAIN;
-    }
-
-    public boolean isBeverage() {
-        return dishType == DishType.BEVERAGE;
-    }
 }
