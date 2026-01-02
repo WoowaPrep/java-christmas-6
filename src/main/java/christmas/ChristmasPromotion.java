@@ -25,6 +25,7 @@ public class ChristmasPromotion {
         VisitDate visitDate = readVisitDate();
         Menus menus = readMenus();
 
+        printEventBenefitsPreview(visitDate.getDay());
         printOrderMenu(menus);
         printTotalOrderAmount(menus);
 
@@ -42,6 +43,9 @@ public class ChristmasPromotion {
         return new Menus(countByMenu);
     }
 
+    private void printEventBenefitsPreview(int day) {
+        outputView.printEventBenefitsPreview(day);
+    }
     private void printOrderMenu(Menus menus) {
         outputView.printOrderMenu(menus);
     }

@@ -2,9 +2,13 @@ package christmas.domain;
 
 public class VisitDate {
 
-    private Integer day;
+    private int day;
 
-    public VisitDate(Integer day) {
+    public VisitDate(int day) {
         this.day = day;
+    }
+
+    public int getDay() {
+        return day;
     }
 }
