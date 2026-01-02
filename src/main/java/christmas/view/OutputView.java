@@ -135,6 +135,7 @@ public class OutputView {
     public void printPaymentAmount(int paymentAmount) {
         System.out.println(PAYMENT_AMOUNT_TITLE);
         System.out.printf(PAYMENT_AMOUNT, paymentAmount);
+        printNewLine();
     }
 
     public void printEventBadge(int total) {
