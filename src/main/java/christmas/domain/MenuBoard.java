@@ -29,6 +29,15 @@ public enum MenuBoard {
         this.dishType = dishType;
     }
 
+    public static MenuBoard of(String menuName) {
+        for (MenuBoard menuBoard : values()) {
+            if (menuName.equals(menuBoard.name)) {
+                return menuBoard;
+            }
+        }
+        return null;
+    }
+
     public String getName() {
         return name;
     }

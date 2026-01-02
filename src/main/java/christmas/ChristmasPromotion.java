@@ -26,6 +26,7 @@ public class ChristmasPromotion {
         Menus menus = readMenus();
 
         printOrderMenu(menus);
+        printTotalOrderAmount(menus);
 
     }
 
@@ -43,5 +44,10 @@ public class ChristmasPromotion {
 
     private void printOrderMenu(Menus menus) {
         outputView.printOrderMenu(menus);
+    }
+
+    private void printTotalOrderAmount(Menus menus) {
+        long totalAmount = menus.calculateTotalOrderAmount();
+        outputView.printOrderMenu(totalAmount);
     }
 }
