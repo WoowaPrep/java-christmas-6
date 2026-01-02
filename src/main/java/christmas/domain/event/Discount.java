@@ -1,5 +1,8 @@
-package christmas.domain;
+package christmas.domain.event;
 
+import christmas.domain.menu.DishType;
+import christmas.domain.menu.MenuBoard;
+import christmas.domain.menu.Menus;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -35,6 +38,10 @@ public class Discount {
     }
 
     public static int calculateDdayDiscount(Menus menus, LocalDate date) {
+        if (validateTotalOrder(menus)) {
+            return 0;
+        }
+
         int dayOfMonth = date.getDayOfMonth();
         if (dayOfMonth > CHRISTMAS_D_DAY) {
             return 0;
@@ -44,6 +51,10 @@ public class Discount {
     }
 
     public static int calculateWeekdayDiscount(Menus menus, LocalDate date) {
+        if (validateTotalOrder(menus)) {
+            return 0;
+        }
+
         int dayModWeek = date.getDayOfMonth() % WEEK_PERIOD;
         if (dayModWeek == FRIDAY || dayModWeek == SATURDAY) {
             return 0;
@@ -64,6 +75,10 @@ public class Discount {
     }
 
     public static int calculateWeekendDiscount(Menus menus, LocalDate date) {
+        if (validateTotalOrder(menus)) {
+            return 0;
+        }
+
         int dayModWeek = date.getDayOfMonth() % WEEK_PERIOD;
         if (dayModWeek != FRIDAY && dayModWeek != SATURDAY) {
             return 0;
@@ -84,6 +99,10 @@ public class Discount {
     }
 
     public static int calculateSpecialDiscount(Menus menus, LocalDate date) {
+        if (validateTotalOrder(menus)) {
+            return 0;
+        }
+
         int dayOfMonth = date.getDayOfMonth();
         if (dayOfMonth != CHRISTMAS_D_DAY && dayOfMonth % WEEK_PERIOD != SUNDAY) {
             return 0;

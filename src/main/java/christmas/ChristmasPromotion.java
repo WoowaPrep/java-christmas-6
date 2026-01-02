@@ -1,7 +1,7 @@
 package christmas;
 
-import christmas.domain.Discount;
-import christmas.domain.Menus;
+import christmas.domain.event.Discount;
+import christmas.domain.menu.Menus;
 import christmas.domain.VisitDate;
 import christmas.view.InputParser;
 import christmas.view.InputView;

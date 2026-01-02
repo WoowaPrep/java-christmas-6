@@ -1,8 +1,8 @@
 package christmas.view;
 
-import christmas.domain.Badge;
-import christmas.domain.Discount;
-import christmas.domain.Menus;
+import christmas.domain.event.Badge;
+import christmas.domain.event.Discount;
+import christmas.domain.menu.Menus;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.Map.Entry;

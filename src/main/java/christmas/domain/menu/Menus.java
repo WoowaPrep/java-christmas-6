@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.menu;
 
 import java.util.Map;
 import java.util.Map.Entry;

@@ -1,7 +1,7 @@
 package christmas.view;
 
-import christmas.domain.DishType;
-import christmas.domain.MenuBoard;
+import christmas.domain.menu.DishType;
+import christmas.domain.menu.MenuBoard;
 import christmas.exception.ChristmasException;
 import christmas.exception.ErrorMessage;
 import java.util.Arrays;
@@ -10,13 +10,16 @@ import java.util.Map;
 
 public class InputParser {
 
+    public static final String NUMERIC_REGEX = "\\d+";
+
     public static final String COMMA_DELIMITER = ",";
     public static final String HYPHEN_DELIMITER = "-";
-    public static final String NUMERIC_REGEX = "\\d+";
-    public static final int ONE = 1;
+
     public static final int VISIT_START_DAY = 1;
     public static final int VISIT_END_DAY = 31;
-    public static final int SEPARATE_COUNT = 2;
+
+    public static final int MENU_COUNT_ONE = 1;
+    public static final int MENU_COUNT_PAIR_COUNT = 2;
     public static final int TOTAL_DISH_LIMIT = 20;
 
     public static Integer parseVisitDate(String input) {
@@ -41,8 +44,10 @@ public class InputParser {
             validateNotExistMenu(menu);
             validateDuplicateMenu(countByMenu, menu);
             countByMenu.put(validateMenu(menu), validateCount(count));
+
             totalCount += Integer.parseInt(count);
             validateTotalOrder(totalCount);
+
             if (isAllBeverage) {
                 isAllBeverage = validateBeverage(menu);
             }
@@ -106,7 +111,7 @@ public class InputParser {
     }
 
     private static void validateMenuPairFormat(String[] countMenu) {
-        if (countMenu.length != SEPARATE_COUNT) {
+        if (countMenu.length != MENU_COUNT_PAIR_COUNT) {
             throw ChristmasException.from(ErrorMessage.INVALID_MENU_FORMAT);
         }
     }
@@ -124,7 +129,7 @@ public class InputParser {
     }
 
     private static void validatePositive(String input) {
-        if (Integer.parseInt(input) < ONE) {
+        if (Integer.parseInt(input) < MENU_COUNT_ONE) {
             throw ChristmasException.from(ErrorMessage.INVALID_MENU_COUNT);
         }
     }
