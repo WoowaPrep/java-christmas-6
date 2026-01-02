@@ -25,9 +25,10 @@ public class ChristmasPromotion {
         VisitDate visitDate = readVisitDate();
         Menus menus = readMenus();
 
-        printEventBenefitsPreview(visitDate.getDay());
+        printEventPreview(visitDate.getDay());
         printOrderMenu(menus);
         printTotalOrderAmount(menus);
+        printGiftEvent(menus);
 
     }
 
@@ -43,8 +44,8 @@ public class ChristmasPromotion {
         return new Menus(countByMenu);
     }
 
-    private void printEventBenefitsPreview(int day) {
-        outputView.printEventBenefitsPreview(day);
+    private void printEventPreview(int day) {
+        outputView.printEventPreview(day);
     }
     private void printOrderMenu(Menus menus) {
         outputView.printOrderMenu(menus);
@@ -53,5 +54,13 @@ public class ChristmasPromotion {
     private void printTotalOrderAmount(Menus menus) {
         long totalAmount = menus.calculateTotalOrderAmount();
         outputView.printOrderMenu(totalAmount);
+    }
+
+    private void printGiftEvent(Menus menus) {
+        if (menus.hasGift()) {
+            outputView.printGiftEvent(true);
+            return;
+        }
+        outputView.printGiftEvent(false);
     }
 }
