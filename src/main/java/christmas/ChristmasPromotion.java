@@ -9,6 +9,7 @@ import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class ChristmasPromotion {
 
@@ -36,15 +37,19 @@ public class ChristmasPromotion {
     }
 
     private VisitDate readVisitDate() {
-        String visitDateInput = inputView.readVisitDate();
-        Integer visitDate = InputParser.parseVisitDate(visitDateInput);
-        return new VisitDate(visitDate);
+        return retry(() -> {
+            String visitDateInput = inputView.readVisitDate();
+            Integer visitDate = InputParser.parseVisitDate(visitDateInput);
+            return new VisitDate(visitDate);
+        });
     }
 
     private Menus readMenus() {
-        String menusInput = inputView.readMenus();
-        Map<String, Integer> countByMenu = InputParser.parseMenus(menusInput);
-        return new Menus(countByMenu);
+        return retry(() -> {
+            String menusInput = inputView.readMenus();
+            Map<String, Integer> countByMenu = InputParser.parseMenus(menusInput);
+            return new Menus(countByMenu);
+        });
     }
 
     private void printBenefitHistory(Menus menus, VisitDate visitDate) {
@@ -117,5 +122,15 @@ public class ChristmasPromotion {
             outputView.printNone();
         }
         outputView.printNewLine();
+    }
+
+    private <T> T retry(Supplier<T> supplier) {
+        while (true) {
+            try {
+                return supplier.get();
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
     }
 }

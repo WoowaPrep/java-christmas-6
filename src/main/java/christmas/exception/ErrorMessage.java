@@ -3,8 +3,9 @@ package christmas.exception;
 public enum ErrorMessage {
 
     EMPTY_INPUT("입력값이 비어있습니다. 다시 입력해 주세요."),
-    DAY_NOT_NUMERIC("날짜는 숫자만 입력 가능합니다. 다시 입력해 주세요."),
-    DAY_OUT_OF_RANGE("유효한 날짜 범위가 아닙니다. 다시 입력해 주세요."),
+
+    DAY_NOT_NUMERIC("유효하지 않은 날짜입니다. 다시 입력해 주세요."),
+    DAY_OUT_OF_RANGE("유효하지 않은 날짜입니다. 다시 입력해 주세요."),
 
     INVALID_MENU_FORMAT("유효하지 않은 주문입니다. 다시 입력해 주세요."),
     INVALID_MENU_COUNT("유효하지 않은 주문입니다. 다시 입력해 주세요."),

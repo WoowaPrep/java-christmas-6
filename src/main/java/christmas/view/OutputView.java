@@ -144,6 +144,10 @@ public class OutputView {
         System.out.println(badge.getName());
     }
 
+    public void printErrorMessage(String message) {
+        System.out.println(message);
+    }
+
     public void printNone() {
         System.out.println(NONE);
     }

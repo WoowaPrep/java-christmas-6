@@ -77,9 +77,15 @@ public class InputParser {
 
     private static Integer validateCount(String input) {
         validateEmpty(input);
-        validateNumeric(input);
+        validateCountNumeric(input);
         validatePositive(input);
         return Integer.parseInt(input);
+    }
+
+    private static void validateCountNumeric(String input) {
+        if (!input.matches(NUMERIC_REGEX)) {
+            throw ChristmasException.from(ErrorMessage.INVALID_MENU_COUNT);
+        }
     }
 
     private static void validateMenuPairFormat(String[] countMenu) {
