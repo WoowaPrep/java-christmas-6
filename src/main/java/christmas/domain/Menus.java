@@ -17,13 +17,13 @@ public class Menus {
         return menus;
     }
 
-    public long calculateTotalOrderAmount() {
-        long totalAmount = 0;
+    public int calculateTotalOrderAmount() {
+        int totalAmount = 0;
         for (Entry<String, Integer> entry : menus.entrySet()) {
             String menuName = entry.getKey();
             Integer count = entry.getValue();
             MenuBoard menu = MenuBoard.of(menuName);
-            totalAmount += (long) menu.getPrice() * count;
+            totalAmount += menu.getPrice() * count;
         }
         return totalAmount;
     }

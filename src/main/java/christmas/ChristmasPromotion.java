@@ -30,6 +30,7 @@ public class ChristmasPromotion {
         printBenefitHistory(menus, visitDate);
 
         printTotalBenefitAmount(menus, visitDate);
+        printPaymentAmount(menus, visitDate);
     }
 
     private VisitDate readVisitDate() {
@@ -55,13 +56,19 @@ public class ChristmasPromotion {
     private void printTotalBenefitAmount(Menus menus, VisitDate day) {
         LocalDate date = LocalDate.of(2023, 12, day.getDay());
         int totalBenefitAmount =
-                Discount.calculateDdayDiscount(date) +
-                Discount.calculateWeekdayDiscount(menus, date) +
-                Discount.calculateWeekendDiscount(menus, date) +
-                Discount.calculateSpecialDiscount(date) +
-                Discount.calculateGiftDiscount(menus);
+                Discount.calculateAllDiscount(menus, date) +
+                Discount.calculateGiftAmount(menus);
 
         outputView.printTotalBenefitAmount(totalBenefitAmount);
+    }
+
+    private void printPaymentAmount(Menus menus, VisitDate day) {
+        LocalDate date = LocalDate.of(2023, 12, day.getDay());
+        int totalOrderAmount = menus.calculateTotalOrderAmount();
+        int totalDiscountAmount = Discount.calculateAllDiscount(menus, date);
+
+        int paymentAmount = totalOrderAmount - totalDiscountAmount;
+        outputView.printPaymentAmount(paymentAmount);
     }
 
     private void printEventPreview(int day) {

@@ -21,6 +21,13 @@ public class Discount {
     private static final int SATURDAY = 2;
     private static final int SUNDAY = 3;
 
+    public static int calculateAllDiscount(Menus menus, LocalDate date) {
+        return  calculateDdayDiscount(date) +
+                calculateWeekdayDiscount(menus, date) +
+                calculateWeekendDiscount(menus, date) +
+                calculateSpecialDiscount(date);
+    }
+
     public static int calculateDdayDiscount(LocalDate date) {
         int dayOfMonth = date.getDayOfMonth();
         if (dayOfMonth > CHRISTMAS_D_DAY) {
@@ -78,7 +85,7 @@ public class Discount {
         return SPECIAL_DISCOUNT;
     }
 
-    public static int calculateGiftDiscount(Menus menus) {
+    public static int calculateGiftAmount(Menus menus) {
         if (menus.hasGift()) {
             return CHAMPAGNE_GIFT_PRICE;
         }

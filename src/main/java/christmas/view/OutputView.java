@@ -26,11 +26,13 @@ public class OutputView {
     private static final String GIFT_EVENT_TITLE = "<증정 메뉴>";
     private static final String BENEFITS_HISTORY_TITLE = "<혜택 내역>";
     private static final String TOTAL_BENEFIT_TITLE = "<총혜택 금액>";
+    private static final String PAYMENT_AMOUNT_TITLE = "<할인 후 예상 결제 금액>";
 
     private static final String MENU_COUNT_FORMAT = "%s %d개" + NEW_LINE;
     private static final String TOTAL_ORDER_AMOUNT_FORMAT = "%,d원" + NEW_LINE;
     private static final String ONE_CHAMPAGNE = "샴페인 1개" + NEW_LINE;
     private static final String TOTAL_BENEFIT_AMOUNT = "%,d원" + NEW_LINE;
+    private static final String PAYMENT_AMOUNT = "%,d원" + NEW_LINE;
 
     public void printEventPreview(int day) {
         System.out.printf(EVENT_BENEFITS_PREVIEW, day);
@@ -113,7 +115,7 @@ public class OutputView {
     }
 
     public boolean printGiftDiscount(Menus menus) {
-        int totalDiscount = Discount.calculateGiftDiscount(menus);
+        int totalDiscount = Discount.calculateGiftAmount(menus);
         if (totalDiscount == 0) {
             return false;
         }
@@ -126,6 +128,11 @@ public class OutputView {
         System.out.println(TOTAL_BENEFIT_TITLE);
         System.out.printf(TOTAL_BENEFIT_AMOUNT, -totalAmount);
         printNewLine();
+    }
+
+    public void printPaymentAmount(int paymentAmount) {
+        System.out.println(PAYMENT_AMOUNT_TITLE);
+        System.out.printf(PAYMENT_AMOUNT, paymentAmount);
     }
 
     public void printNone() {
