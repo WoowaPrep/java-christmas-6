@@ -1,5 +1,6 @@
 package christmas;
 
+import christmas.domain.Badge;
 import christmas.domain.Discount;
 import christmas.domain.Menus;
 import christmas.domain.VisitDate;
@@ -31,6 +32,7 @@ public class ChristmasPromotion {
 
         printTotalBenefitAmount(menus, visitDate);
         printPaymentAmount(menus, visitDate);
+        printEventBadge(menus, visitDate);
     }
 
     private VisitDate readVisitDate() {
@@ -69,6 +71,15 @@ public class ChristmasPromotion {
 
         int paymentAmount = totalOrderAmount - totalDiscountAmount;
         outputView.printPaymentAmount(paymentAmount);
+    }
+
+    private void printEventBadge(Menus menus, VisitDate day) {
+        LocalDate date = LocalDate.of(2023, 12, day.getDay());
+        int totalBenefitAmount =
+                Discount.calculateAllDiscount(menus, date) +
+                        Discount.calculateGiftAmount(menus);
+
+        outputView.printEventBadge(totalBenefitAmount);
     }
 
     private void printEventPreview(int day) {

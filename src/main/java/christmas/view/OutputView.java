@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.domain.Badge;
 import christmas.domain.Discount;
 import christmas.domain.Menus;
 import java.time.LocalDate;
@@ -27,6 +28,7 @@ public class OutputView {
     private static final String BENEFITS_HISTORY_TITLE = "<혜택 내역>";
     private static final String TOTAL_BENEFIT_TITLE = "<총혜택 금액>";
     private static final String PAYMENT_AMOUNT_TITLE = "<할인 후 예상 결제 금액>";
+    private static final String EVENT_BADGE_TITLE = "<12월 이벤트 배지>";
 
     private static final String MENU_COUNT_FORMAT = "%s %d개" + NEW_LINE;
     private static final String TOTAL_ORDER_AMOUNT_FORMAT = "%,d원" + NEW_LINE;
@@ -133,6 +135,12 @@ public class OutputView {
     public void printPaymentAmount(int paymentAmount) {
         System.out.println(PAYMENT_AMOUNT_TITLE);
         System.out.printf(PAYMENT_AMOUNT, paymentAmount);
+    }
+
+    public void printEventBadge(int total) {
+        Badge badge = Badge.getBadge(total);
+        System.out.println(EVENT_BADGE_TITLE);
+        System.out.println(badge.getName());
     }
 
     public void printNone() {
