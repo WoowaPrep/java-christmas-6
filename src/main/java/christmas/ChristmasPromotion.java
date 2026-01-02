@@ -1,5 +1,6 @@
 package christmas;
 
+import christmas.domain.Discount;
 import christmas.domain.Menus;
 import christmas.domain.VisitDate;
 import christmas.view.InputParser;
@@ -28,6 +29,7 @@ public class ChristmasPromotion {
 
         printBenefitHistory(menus, visitDate);
 
+        printTotalBenefitAmount(menus, visitDate);
     }
 
     private VisitDate readVisitDate() {
@@ -48,6 +50,18 @@ public class ChristmasPromotion {
         printTotalOrderAmount(menus);
         printGiftEvent(menus);
         printBenefits(menus, visitDate);
+    }
+
+    private void printTotalBenefitAmount(Menus menus, VisitDate day) {
+        LocalDate date = LocalDate.of(2023, 12, day.getDay());
+        int totalBenefitAmount =
+                Discount.calculateDdayDiscount(date) +
+                Discount.calculateWeekdayDiscount(menus, date) +
+                Discount.calculateWeekendDiscount(menus, date) +
+                Discount.calculateSpecialDiscount(date) +
+                Discount.calculateGiftDiscount(menus);
+
+        outputView.printTotalBenefitAmount(totalBenefitAmount);
     }
 
     private void printEventPreview(int day) {

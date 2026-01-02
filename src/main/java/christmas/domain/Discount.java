@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -14,11 +15,27 @@ public class Discount {
 
     private static final int CHAMPAGNE_GIFT_PRICE = 25_000;
 
-    public static int calculateDdayDiscount(int dayOfMonth) {
+    private static final int CHRISTMAS_D_DAY = 25;
+    private static final int WEEK_PERIOD = 7;
+    private static final int FRIDAY = 1;
+    private static final int SATURDAY = 2;
+    private static final int SUNDAY = 3;
+
+    public static int calculateDdayDiscount(LocalDate date) {
+        int dayOfMonth = date.getDayOfMonth();
+        if (dayOfMonth > CHRISTMAS_D_DAY) {
+            return 0;
+        }
+
         return BASIC_DISCOUNT + DAILY_INCREMENT * (dayOfMonth - 1);
     }
 
-    public static int calculateWeekdayDiscount(Menus menus) {
+    public static int calculateWeekdayDiscount(Menus menus, LocalDate date) {
+        int dayModWeek = date.getDayOfMonth() % WEEK_PERIOD;
+        if (dayModWeek == FRIDAY || dayModWeek == SATURDAY) {
+            return 0;
+        }
+
         Map<String, Integer> countByMenu = menus.getMenus();
         int totalDiscount = 0;
 
@@ -33,7 +50,12 @@ public class Discount {
         return totalDiscount;
     }
 
-    public static int calculateWeekendDiscount(Menus menus) {
+    public static int calculateWeekendDiscount(Menus menus, LocalDate date) {
+        int dayModWeek = date.getDayOfMonth() % WEEK_PERIOD;
+        if (dayModWeek != FRIDAY && dayModWeek != SATURDAY) {
+            return 0;
+        }
+
         Map<String, Integer> countByMenu = menus.getMenus();
         int totalDiscount = 0;
 
@@ -48,7 +70,11 @@ public class Discount {
         return totalDiscount;
     }
 
-    public static int calculateSpecialDiscount() {
+    public static int calculateSpecialDiscount(LocalDate date) {
+        int dayOfMonth = date.getDayOfMonth();
+        if (dayOfMonth != CHRISTMAS_D_DAY && dayOfMonth % WEEK_PERIOD != SUNDAY) {
+            return 0;
+        }
         return SPECIAL_DISCOUNT;
     }
 
