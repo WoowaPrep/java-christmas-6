@@ -9,4 +9,8 @@ public class Menus {
     public Menus(Map<String, Integer> menus) {
         this.menus = menus;
     }
+
+    public Map<String, Integer> getMenus() {
+        return menus;
+    }
 }

@@ -24,6 +24,9 @@ public class ChristmasPromotion {
     public void open() {
         VisitDate visitDate = readVisitDate();
         Menus menus = readMenus();
+
+        printOrderMenu(menus);
+
     }
 
     private VisitDate readVisitDate() {
@@ -36,5 +39,9 @@ public class ChristmasPromotion {
         String menusInput = inputView.readMenus();
         Map<String, Integer> countByMenu = InputParser.parseMenus(menusInput);
         return new Menus(countByMenu);
+    }
+
+    private void printOrderMenu(Menus menus) {
+        outputView.printOrderMenu(menus);
     }
 }
