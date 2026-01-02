@@ -5,6 +5,7 @@ import christmas.domain.VisitDate;
 import christmas.view.InputParser;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class ChristmasPromotion {
@@ -25,10 +26,7 @@ public class ChristmasPromotion {
         VisitDate visitDate = readVisitDate();
         Menus menus = readMenus();
 
-        printEventPreview(visitDate.getDay());
-        printOrderMenu(menus);
-        printTotalOrderAmount(menus);
-        printGiftEvent(menus);
+        printBenefitHistory(menus, visitDate);
 
     }
 
@@ -42,6 +40,14 @@ public class ChristmasPromotion {
         String menusInput = inputView.readMenus();
         Map<String, Integer> countByMenu = InputParser.parseMenus(menusInput);
         return new Menus(countByMenu);
+    }
+
+    private void printBenefitHistory(Menus menus, VisitDate visitDate) {
+        printEventPreview(visitDate.getDay());
+        printOrderMenu(menus);
+        printTotalOrderAmount(menus);
+        printGiftEvent(menus);
+        printBenefits(menus, visitDate);
     }
 
     private void printEventPreview(int day) {
@@ -62,5 +68,16 @@ public class ChristmasPromotion {
             return;
         }
         outputView.printGiftEvent(false);
+    }
+
+    private void printBenefits(Menus menus, VisitDate day) {
+        LocalDate visitDate = LocalDate.of(2023, 12, day.getDay());
+
+        outputView.printBenefitsHistoryTitle();
+        outputView.printDdayDiscount(visitDate);
+        outputView.printWeekdayDiscount(menus, visitDate);
+        outputView.printWeekendDiscount(menus, visitDate);
+        outputView.printSpecialDiscount(visitDate);
+        outputView.printGiftDiscount(menus);
     }
 }
